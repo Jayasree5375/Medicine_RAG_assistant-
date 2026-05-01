@@ -1,0 +1,14 @@
+graph TD
+    User[User] -->|Upload PDF| Frontend[Streamlit App]
+    User -->|Ask Question| Frontend
+    
+    Frontend -->|PDF Text| PDFProc[PDF Processor]
+    PDFProc -->|Chunks| VectorStore[ChromaDB]
+    
+    Frontend -->|Query| RAGEngine[RAG Engine]
+    RAGEngine -->|Query Embedding| VectorStore
+    VectorStore -->|Relevant Chunks| RAGEngine
+    
+    RAGEngine -->|Prompt + Context| LLM[Ollama (Llama3)]
+    LLM -->|Answer| RAGEngine
+    RAGEngine -->|Answer + Sources| Frontend
